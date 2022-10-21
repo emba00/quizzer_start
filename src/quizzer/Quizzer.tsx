@@ -30,10 +30,10 @@ export const Quizzer = () => {
         );
     }
 
-    function addQuiz(title: string, body: string) {
-        setQuizzes([...quizzes, newQuiz]);
+     function addQuiz(title: string, body: string) {
+        setQuizzes([...quizzes, {id: 0, title:title, body: body, published:false, questionList: []}]);
     }
-
+ 
     function deleteQuiz(qId: number) {
         setQuizzes(quizzes.filter((q: Quiz): boolean => qId !== q.id));
     }

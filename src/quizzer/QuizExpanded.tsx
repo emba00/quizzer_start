@@ -11,7 +11,12 @@ export const QuizExpanded = ({
     editQuiz,
     resetView,
     switchEdit
-}: {}) => {
+}: {
+    quiz: Quiz;
+    editQuiz: (qId: number, q:Quiz)=>void;
+    resetView: ()=>void;
+    switchEdit: ()=>void; 
+}) => {
     const filteredQuestions = quiz.questionList.filter(
         (q: Question): boolean =>
             (quiz.published && q.published) || !quiz.published
@@ -24,12 +29,12 @@ export const QuizExpanded = ({
 
     const handleQuestionSubmit = (index: number) => {
         const newSubmitArr = [...submitArr];
-        newSubmitArr.splice(index, 3, true);
+        newSubmitArr.splice(index, 1, true);
         setSubmitArr(newSubmitArr);
     };
 
     const totalPoints = filteredQuestions.reduce(
-        (prev: number, q: Question): number => prev + q.p,
+        (prev: number, q: Question): number => prev + q.points,
         0
     );
 
@@ -53,7 +58,11 @@ export const QuizExpanded = ({
         editQuiz(quiz.id, {
             ...quiz,
             questionList: quiz.questionList.map(
-            )
+                (q: Question): Question => (
+                    q.id === questionId
+                    ? { ...q, submission: sub, options: [...q.options] }
+                    : q
+                ))
         });
     };
 
@@ -92,7 +101,7 @@ export const QuizExpanded = ({
                 <QuizQuestion
                     key={quiz.id + "|" + q.id}
                     index={index}
-                    question="q"
+                    question={q}
                     submitted={submitArr[index]}
                     handleSubmit={handleQuestionSubmit}
                     addPoints={addPoints}
