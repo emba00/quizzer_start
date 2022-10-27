@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { NumberLiteralType } from "typescript";
-import { Question, QuestionType } from "../interfaces/question";
+//import { NumberLiteralType } from "typescript";
+import { Question } from "../interfaces/question";
 
 import "./QuestionEdit.css";
 
